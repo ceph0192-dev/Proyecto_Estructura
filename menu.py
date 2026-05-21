@@ -3,6 +3,7 @@ import os
 
 #Modulos propios del proyecto
 import metodos
+from lista import lista
 
 def menu():
     print("\n" + "="*20)
@@ -19,6 +20,8 @@ def menu():
 def mostrar_menu():
     error = ""
 
+    mi_lista = lista()
+
     while True:
         os.system('clear' if os.name == 'posix' else 'cls')
             
@@ -34,7 +37,7 @@ def mostrar_menu():
             print("\n" + "="*20)
             print("   Registrar contacto   ")
             print("="*20)
-            #Poner función que realize el registro
+            metodos.nuevo_contacto(mi_lista)
 
         elif opcion == "2":
             pass
