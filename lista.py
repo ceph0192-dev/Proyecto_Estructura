@@ -1,5 +1,5 @@
 from nodo import nodo
-class lista:
+class Lista:
     def __init__(self):
         self.__head = None
     

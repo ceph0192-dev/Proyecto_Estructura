@@ -3,3 +3,4 @@ class nodo:
         self.dato = dato
         self.siguiente = None
         
+    
