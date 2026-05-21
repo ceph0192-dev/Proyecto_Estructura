@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class contacto:
     def __init__(self, id, Nombres, Paterno, Materno,
 Direccion, Estado, Ciudad, Nacimiento, Edad, Tel, C_personal, 
