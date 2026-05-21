@@ -13,7 +13,7 @@ def nuevo_contacto(lista_contactos):
     ONacimient = input("Ingresa la frecha de nacimiento:")
     #Agregar los inputs de todos los campos
 
-    nuevo_contacto = contacto()
+    nuevo_contacto = contacto(Nombres, Paterno, Materno, Direccion, Estado, Ciudad, )
 
     lista_contactos.insertar(nuevo_contacto)
 
