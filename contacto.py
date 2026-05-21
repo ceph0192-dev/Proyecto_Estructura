@@ -5,22 +5,22 @@ class contacto:
 Direccion, Estado, Ciudad, Nacimiento, Edad, Tel, C_personal, 
 Matricula, C_institucional, Fac, Lic, F_ingreso,
 Antiguedad, F_registro, T_actualizacion):
-        self.id = None
-        self.Nombres = Nombres
-        self.Paterno = Paterno
-        self.Materno = Materno
-        self.Direccion = Direccion
-        self.Estado = Estado
-        self.Ciudad = Ciudad
-        self.Nacimiento = Nacimiento
-        self.Edad = None
-        self.Tel = Tel
-        self.C_personal = C_personal
-        self.Matricula = Matricula
-        self.C_institucional = C_institucional
-        self.Fac = Fac
-        self.Lic = Lic
-        self.F_ingreso = F_ingreso
-        self.Antiguedad = None
-        self.F_registro = None
-        self.T_actualizacion = T_actualizacion
+        self.__id = None
+        self.__Nombres = Nombres
+        self.__Paterno = Paterno
+        self.__Materno = Materno
+        self.__Direccion = Direccion
+        self.__Estado = Estado
+        self.__Ciudad = Ciudad
+        self.__Nacimiento = Nacimiento
+        self.__Edad = None
+        self.__Tel = Tel
+        self.__C_personal = C_personal
+        self.__Matricula = Matricula
+        self.__C_institucional = C_institucional
+        self.__Fac = Fac
+        self.__Lic = Lic
+        self.__F_ingreso = F_ingreso
+        self.__Antiguedad = None
+        self.__F_registro = None
+        self.__T_actualizacion = T_actualizacion
