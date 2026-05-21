@@ -1,5 +1,4 @@
 from datetime import datetime
-#akdsjksajdknsajkdnasjkdnaskjd s
 class contacto:
     def __init__(self, id, Nombres, Paterno, Materno,
 Direccion, Estado, Ciudad, Nacimiento, Edad, Tel, C_personal, 
