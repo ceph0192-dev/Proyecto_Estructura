@@ -14,4 +14,4 @@ class Lista:
             while temp.siguiente:
                 temp = temp.siguiente
             
-            temp = nuevo_nodo
+            temp.siguiente = nuevo_nodo

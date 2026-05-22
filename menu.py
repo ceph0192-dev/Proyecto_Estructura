@@ -3,7 +3,7 @@ import os
 
 #Modulos propios del proyecto
 import metodos
-from lista import lista
+from lista import Lista
 
 def menu():
     print("\n" + "="*20)
@@ -20,7 +20,7 @@ def menu():
 def mostrar_menu():
     error = ""
 
-    mi_lista = lista()
+    mi_lista = Lista()
 
     while True:
         os.system('clear' if os.name == 'posix' else 'cls')
@@ -34,6 +34,7 @@ def mostrar_menu():
         opcion = input("Elige una opción (1-6): ")
 
         if opcion == "1":
+            os.system('clear' if os.name == 'posix' else 'cls')
             print("\n" + "="*20)
             print("   Registrar contacto   ")
             print("="*20)
@@ -42,7 +43,7 @@ def mostrar_menu():
         elif opcion == "2":
             pass
 
-        elif opcion == "3:":
+        elif opcion == "3":
             pass
 
         elif opcion== "4":

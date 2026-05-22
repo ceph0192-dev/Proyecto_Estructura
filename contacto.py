@@ -2,11 +2,11 @@ from datetime import date, datetime
 
 class contacto:
     def __init__(self, id_contacto, Nombres, Paterno, Materno,
-                 Direccion, Estado, Ciudad, Nacimiento, Tel, C_personal, 
-                 Matricula, C_institucional, Fac, Lic, F_ingreso):
+                Direccion, Estado, Ciudad, Nacimiento, Tel, C_personal, 
+                Matricula, C_institucional, Fac, Lic, F_ingreso):
         
-        # Calcula mediante la funcion hash
-        self.__id = id_contacto 
+        self.__Matricula = Matricula
+        self.__id = self.calcular_id()#Genera el id a partir de un metodo propio tipo hash
         self.__Nombres = Nombres
         self.__Paterno = Paterno
         self.__Materno = Materno
@@ -17,7 +17,6 @@ class contacto:
         self.__Edad = self.__calcular_edad() # Calcula la edad a partir de la fecha de nacimiento
         self.__Tel = Tel
         self.__C_personal = C_personal
-        self.__Matricula = Matricula
         self.__C_institucional = C_institucional
         self.__Fac = Fac
         self.__Lic = Lic
@@ -25,6 +24,18 @@ class contacto:
         self.__Antiguedad = self.__calcular_antiguedad() # Calcula la antigüedad a partir de la fecha de ingreso
         self.__F_registro = date.today() # Lo toma automaticamente del sistema 
         self.__T_actualizacion = None # Se actualiza cada vez que se modifica el contacto
+
+    def calcular_id(self):
+        prox_id = self.__Matricula
+        valor_hash = 0
+        primo = 31
+        
+        for caracter in prox_id:
+            valor_hash = (valor_hash * primo) + ord(caracter)
+
+            id = valor_hash % 100000000
+
+            return str(id)
 
     def __calcular_edad(self):
         hoy = date.today()
@@ -152,4 +163,4 @@ class contacto:
         self.__T_actualizacion = datetime.now() # Registra la fecha y hora de la última actualización 
     
     def mostrar_info(self):
-      print("ID:", self.get_id())
+        print("ID:", self.get_id())
