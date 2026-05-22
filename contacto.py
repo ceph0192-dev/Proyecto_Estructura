@@ -1,4 +1,5 @@
-from datetime import datetime
+from datetime import date, datetime
+
 class contacto:
     def __init__(self, id, Nombres, Paterno, Materno,
 Direccion, Estado, Ciudad, Nacimiento, Edad, Tel, C_personal, 
@@ -23,3 +24,5 @@ Antiguedad, F_registro, T_actualizacion):
         self.__Antiguedad = None
         self.__F_registro = None
         self.__T_actualizacion = T_actualizacion
+
+        
