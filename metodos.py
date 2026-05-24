@@ -1,5 +1,5 @@
 from lista import Lista
-from contacto import contacto
+from contacto import Contacto
 from datetime import datetime
 
 def nuevo_contacto(lista_contactos):
@@ -120,7 +120,7 @@ def nuevo_contacto(lista_contactos):
     F_ingreso = datetime.strptime(F_ingreso_str, "%d/%m/%Y").date()
 
 
-    nuevo_contacto = contacto(Nombres, Paterno, Materno, Direccion, Estado, Ciudad, 
+    nuevo_contacto = Contacto(Nombres, Paterno, Materno, Direccion, Estado, Ciudad, 
                     Nacimiento, Tel, C_personal, Matricula,
                     C_institucional, Fac, Lic, F_ingreso)
 
