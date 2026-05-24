@@ -163,4 +163,8 @@ class contacto:
         self.__T_actualizacion = datetime.now() # Registra la fecha y hora de la última actualización 
 
     def mostrar_info(self):
+
         print("ID:", self.get_id())
+
+      print("ID:", self.get_id())
+      print("Nombre Completo:", self.get_nombre_completo())
