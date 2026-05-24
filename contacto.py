@@ -1,6 +1,6 @@
 from datetime import date, datetime
 
-class contacto:
+class Contacto:
     def __init__(self, Nombres, Paterno, Materno,
                 Direccion, Estado, Ciudad, Nacimiento, Tel, C_personal, 
                 Matricula, C_institucional, Fac, Lic, F_ingreso):
@@ -145,6 +145,7 @@ class contacto:
 
     def set_Matricula(self, valor):
         self.__Matricula = valor
+        self.__id = self.calcular_id() # Actualiza el ID automáticamente si cambia la matrícula
 
     def set_C_institucional(self, valor):
         self.__C_institucional = valor
@@ -164,7 +165,28 @@ class contacto:
 
     def mostrar_info(self):
 
-        print("ID:", self.get_id())
-
-      print("ID:", self.get_id())
-      print("Nombre Completo:", self.get_nombre_completo())
+        print("=====INFORMACIÓN DEL CONTACTO=====")
+        print("ID:", self.__id)
+        print("Nombre(s):", self.__Nombres)
+        print("Apellido Paterno:", self.__Paterno)
+        print("Apellido Materno:", self.__Materno)
+        print("Nombre Completo:", self.get_nombre_completo())
+        print("Dirección:", self.__Direccion)
+        print("Estado:", self.__Estado)
+        print("Ciudad:", self.__Ciudad)
+        print("Fecha de Nacimiento:", self.__Nacimiento.strftime("%d/%m/%Y"))
+        print("Edad:", self.get_Edad())
+        print("Teléfono:", self.__Tel)
+        print("Correo Personal:", self.__C_personal)
+        print("Matrícula:", self.__Matricula)
+        print("Correo Institucional:", self.__C_institucional)
+        print("Facultad:", self.__Fac)
+        print("Licenciatura:", self.__Lic)
+        print("Fecha de Ingreso:", self.__F_ingreso.strftime("%d/%m/%Y"))
+        print("Antigüedad:", self.get_Antiguedad())
+        print("Fecha de Registro:", self.__F_registro.strftime("%d/%m/%Y"))
+        if self.__T_actualizacion:
+            print("Última Actualización:", self.__T_actualizacion.strftime("%d/%m/%Y %H:%M:%S"))
+        else:
+            print("No se ha actualizado aún")
+        print("==================================")
