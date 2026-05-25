@@ -4,8 +4,9 @@ class Lista:
     def __init__(self):
         self.__head = None
         self.__tamaño = 0
+        self.__dic = {}
     
-    def insertar(self,contacto): #INsertar al final de la lista
+    def insertar(self,contacto): #Insertar al final de la lista
         nuevo_nodo = Nodo(contacto)
 
         if self.__head is None:
@@ -17,8 +18,15 @@ class Lista:
                 temp = temp.siguiente
             temp.siguiente = nuevo_nodo
         self.__tamaño += 1
+
+        id_contacto = contacto.get_id()
+        self.__dic[id_contacto] = nuevo_nodo
+
         return nuevo_nodo
-    
+
+    def buscar_por_id(self, id_contacto):#Busca la id del contacto en el dic y devuelve el nodo
+        return self.__dic.get(id_contacto, None)
+
     def buscar(self, matricula): #Busca un contacto por su matrícula y devuelve el nodo que lo contiene
         temp = self.__head
         while temp is not None:
