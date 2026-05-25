@@ -276,9 +276,43 @@ def nuevo_contacto():
                     Nacimiento=nuevo_nacimiento, Tel=nuevo_tel, C_personal=nuevo_c_personal, Matricula=matricula,
                     C_institucional=nuevo_c_institucional, Fac=nueva_fac, Lic=nueva_lic, F_ingreso=nuevo_f_ingreso)
 
+        actualizar_contacto._Contacto__F_registro = temp.get_F_registro() # Mantiene la fecha de registro original
+        actualizar_contacto.marcar_actualizacion() # Actualiza la fecha de última actualización
+        
+        lista_contactos.actualizar(matricula, actualizar_contacto)
 
+        print( "\n Contacto actualizado")
+        input("Presiona Enter para continuar...")
 
+    def eliminar_contacto(): #Elimina un contacto de la lista por su matrícula
+        while True:
+            Matricula = input("Ingrese la matrícula del contacto a eliminar: ")
+            if Matricula != "" and Matricula.isalnum():
+                break
+            else:
+                print("La matrícula no puede estar vacía")
+        
+        id_buscar = _calcular_id_matricula(Matricula)
+        nodo = lista_contactos.buscar_por_id(id_buscar)
 
+        if nodo is None or nodo.dato.get_Matricula() != Matricula:
+            print("No se encontró ningún contacto con esa matrícula.")
+            input("Presiona Enter para continuar...")
+            return
+        
+        while True:
+            confirmar = input(f"Estas seguro de eliminar el contacto con la matricula {Matricula}? (S/N): ").upper()
+            if confirmar in ("S", "N"):
+                break
+            else:
+                print("Por favor ingresa 'S' para sí o 'N' para no.")
+
+        if confirmar == "S":
+            lista_contactos.eliminar(Matricula, id_buscar)
+            print("Contacto eliminado.")
+        else:
+            print("\n Operación cancelada")
+        input("Presiona Enter para continuar...")
 
 
 
