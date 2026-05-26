@@ -314,6 +314,11 @@ def nuevo_contacto():
             print("\n Operación cancelada")
         input("Presiona Enter para continuar...")
 
+# ----------------------------------
+# REPORTE DE CONTACTOS
+# ----------------------------------
+
+
 
 
 def _calcular_id_matricula(matricula):
