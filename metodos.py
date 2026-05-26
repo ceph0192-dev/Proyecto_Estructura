@@ -318,12 +318,127 @@ def eliminar_contacto(): #Elimina un contacto de la lista por su matrícula
 # REPORTE DE CONTACTOS
 # ----------------------------------
 
+def _contacto_txt(contacto):
+    separador = "-" * 40
 
+    if contacto.get_T_actualizacion():
+        actualizacion = contacto.get_F_actualizacion().strftime('%d/%m/%Y %H:%M:%S')
+    else:
+        actualizacion = "No se ha actualizado" \
+    
+    datos = [
+        separador,
+        f"ID: {contacto.get_id()}\n"
+        f"Nombre Completo: {contacto.get_nombre_completo()}\n"
+        f"Dirección: {contacto.get_Direccion()}\n"
+        f"Estado: {contacto.get_Estado()}\n"
+        f"Ciudad: {contacto.get_Ciudad()}\n"
+        f"Fecha de Nacimiento: {contacto.get_Nacimiento().strftime('%d/%m/%Y')}\n"
+        f"Teléfono: {contacto.get_Tel()}\n"
+        f"Correo Personal: {contacto.get_C_personal()}\n"
+        f"Matrícula: {contacto.get_Matricula()}\n"
+        f"Correo Institucional: {contacto.get_C_institucional()}\n"
+        f"Facultad: {contacto.get_Fac()}\n"
+        f"Licenciatura: {contacto.get_Lic()}\n"
+        f"Fecha de Ingreso: {contacto.get_F_ingreso().strftime('%d/%m/%Y')}\n"
+        f"Fecha de Registro: {contacto.get_F_registro().strftime('%d/%m/%Y %H:%M:%S')}\n"
+        f"Fecha de Última Actualización: {contacto.get_F_actualizacion().strftime('%d/%m/%Y %H:%M:%S')}\n",
+        separador,
+    ]
+    return "\n".join(datos)
 
+def _cabecera_reporte(titulo, detalle):
+    separador = "=" * 50
+    
+    datos = [
+        separador,
+        titulo, 
+        separador,
+        detalle,
+        datetime.now().strftime('%d/%m/%Y %H:%M:%S'), #fecha de creación del reporte
+        separador,
+    ]
 
+    return "\n".join(datos)
+
+def _guardar_reporte(nombre_archivo, contenido):
+    with open(nombre_archivo, "w", encoding="utf-8") as archivo:
+        archivo.write(contenido)
+    print(f"\n Reporte guardado como '{nombre_archivo}'")
+
+def reporte_matricula():
+    while True:
+        matricula = input("Ingrese la matrícula del contacto para generar el reporte: ")
+        if matricula != "" and matricula.isalnum():
+            break
+        else:
+            print("La matrícula no puede estar vacía")
+        
+    id_buscar = _calcular_id_matricula(matricula)
+    nodo = lista_contactos.buscar_por_id(id_buscar)
+
+    if nodo is None or nodo.dato.get_Matricula() != matricula:
+        print("No se encontró ningún contacto con esa matrícula.")
+        input("Presiona Enter para continuar...")
+        return
+    
+    contacto = nodo.dato
+    titulo = f"Reporte de Contacto - {contacto.get_nombre_completo()}"
+    detalle = f"Matrícula: {contacto.get_Matricula()}"
+    
+    contenido_reporte = _cabecera_reporte(titulo, detalle) + "\n\n" + _contacto_txt(contacto)
+    
+    nombre_archivo = f"reporte_{contacto.get_Matricula()}.txt"
+    _guardar_reporte(nombre_archivo, contenido_reporte)
+    
+    input("Presiona Enter para continuar...")
+
+def reporte_fechas():
+    while True:
+        fecha_inicio_str = input("Ingrese la fecha de inicio (DD/MM/AAAA): ")
+        try:
+            fecha_inicio = datetime.strptime(fecha_inicio_str, "%d/%m/%Y").date()
+            break
+        except ValueError:
+            print("Formato incorrecto. Usa el formato DD/MM/AAAA")
+
+    while True:
+        fecha_fin_str = input("Ingrese la fecha de fin (DD/MM/AAAA): ")
+        try:
+            fecha_fin = datetime.strptime(fecha_fin_str, "%d/%m/%Y").date()
+            if fecha_fin >= fecha_inicio:
+                break
+            else:
+                print("La fecha de fin debe ser igual o posterior a la fecha de inicio.")
+        except ValueError:
+            print("Formato incorrecto. Usa el formato DD/MM/AAAA")
+
+    contactos_filtrados = lista_contactos.filtrar_por_fecha_ingreso(fecha_inicio, fecha_fin)
+
+    if not contactos_filtrados:
+        print("No se encontraron contactos con fechas de ingreso dentro del rango especificado.")
+        input("Presiona Enter para continuar...")
+        return
+
+    titulo = f"Reporte de Contactos por Fecha de Ingreso"
+    detalle = f"Rango: {fecha_inicio.strftime('%d/%m/%Y')} - {fecha_fin.strftime('%d/%m/%Y')}"
+    
+    contenido_reporte = _cabecera_reporte(titulo, detalle) + "\n\n"
+    for contacto in contactos_filtrados:
+        contenido_reporte += _contacto_txt(contacto) + "\n\n"
+
+    nombre_archivo = f"reporte_fechas_{fecha_inicio.strftime('%Y%m%d')}_{fecha_fin.strftime('%Y%m%d')}.txt"
+    _guardar_reporte(nombre_archivo, contenido_reporte)
+    
+    input("Presiona Enter para continuar...")
+
+#Codigi reutilizable para calcular el ID a partir de la matrícula, asegurando que el mismo contacto siempre tenga el mismo ID incluso si se actualiza su información
 def _calcular_id_matricula(matricula):
     valor_hash = 0
     primo = 31
     for caracter in matricula:
         valor_hash = (valor_hash * primo) + ord(caracter)
     return str(valor_hash % 1000000).zfill(8)
+
+def total_contactos():
+    return lista_contactos.tamaño()
