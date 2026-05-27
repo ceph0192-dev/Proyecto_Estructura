@@ -119,13 +119,13 @@ def nuevo_contacto(mi_lista):
     nuevo_contacto = Contacto(Nombres=Nombres, Paterno=Paterno, Materno=Materno, Direccion=Direccion, Estado=Estado, Ciudad=Ciudad,
                     Nacimiento=Nacimiento, Tel=Tel, C_personal=C_personal, Matricula=Matricula,
                     C_institucional=C_institucional, Fac=Fac, Lic=Lic, F_ingreso=F_ingreso)
-
-    if lista_contactos.existe_id(nuevo_contacto.get_id()): #verifica si ya existe un contacto con la misma matrícula antes de agregarlo
+    
+    if mi_lista.buscar_por_id(nuevo_contacto.get_id()) is not None: #verifica si ya existe un contacto con la misma matrícula antes de agregarlo
         print("Ya existe un contacto con esta matrícula. No se puede agregar.")
         input("Presiona Enter para continuar...")
         return
     
-    lista_contactos.insertar(nuevo_contacto)
+    mi_lista.insertar(nuevo_contacto)
     print("\n Contacto guardado con éxito.")
     input("Presiona Enter para continuar...")
 
@@ -165,7 +165,7 @@ def actualizar_contacto(mi_lista):
         return
     
     temp = nodo.dato
-    print("\n Contacto encontrado: {temp.get_nombre_completo()})")
+    print(f"\n Contacto encontrado: {temp.get_nombre_completo()}")
     print("Ingrese la nueva información (deja en blanco para mantener el valor actual):")
 
     while True: #Nombres
@@ -320,27 +320,30 @@ def _contacto_txt(contacto):
     separador = "-" * 40
 
     if contacto.get_T_actualizacion():
-        actualizacion = contacto.get_F_actualizacion().strftime('%d/%m/%Y %H:%M:%S')
+        # Corregido: Llamamos al método correcto get_T_actualizacion()
+        actualizacion = contacto.get_T_actualizacion().strftime('%d/%m/%Y %H:%M:%S')
     else:
-        actualizacion = "No se ha actualizado" \
+        actualizacion = "No se ha actualizado aún" 
     
+    # Corregido: Se agregaron las comas al final de cada línea
+    # Corregido: Se eliminaron los \n manuales, el método .join() ya los pone
     datos = [
         separador,
-        f"ID: {contacto.get_id()}\n"
-        f"Nombre Completo: {contacto.get_nombre_completo()}\n"
-        f"Dirección: {contacto.get_Direccion()}\n"
-        f"Estado: {contacto.get_Estado()}\n"
-        f"Ciudad: {contacto.get_Ciudad()}\n"
-        f"Fecha de Nacimiento: {contacto.get_Nacimiento().strftime('%d/%m/%Y')}\n"
-        f"Teléfono: {contacto.get_Tel()}\n"
-        f"Correo Personal: {contacto.get_C_personal()}\n"
-        f"Matrícula: {contacto.get_Matricula()}\n"
-        f"Correo Institucional: {contacto.get_C_institucional()}\n"
-        f"Facultad: {contacto.get_Fac()}\n"
-        f"Licenciatura: {contacto.get_Lic()}\n"
-        f"Fecha de Ingreso: {contacto.get_F_ingreso().strftime('%d/%m/%Y')}\n"
-        f"Fecha de Registro: {contacto.get_F_registro().strftime('%d/%m/%Y %H:%M:%S')}\n"
-        f"Fecha de Última Actualización: {contacto.get_F_actualizacion().strftime('%d/%m/%Y %H:%M:%S')}\n",
+        f"ID: {contacto.get_id()}",
+        f"Nombre Completo: {contacto.get_nombre_completo()}",
+        f"Dirección: {contacto.get_Direccion()}",
+        f"Estado: {contacto.get_Estado()}",
+        f"Ciudad: {contacto.get_Ciudad()}",
+        f"Fecha de Nacimiento: {contacto.get_Nacimiento().strftime('%d/%m/%Y')}",
+        f"Teléfono: {contacto.get_Tel()}",
+        f"Correo Personal: {contacto.get_C_personal()}",
+        f"Matrícula: {contacto.get_Matricula()}",
+        f"Correo Institucional: {contacto.get_C_institucional()}",
+        f"Facultad: {contacto.get_Fac()}",
+        f"Licenciatura: {contacto.get_Lic()}",
+        f"Fecha de Ingreso: {contacto.get_F_ingreso().strftime('%d/%m/%Y')}",
+        f"Fecha de Registro: {contacto.get_F_registro().strftime('%d/%m/%Y')}",
+        f"Fecha de Última Actualización: {actualizacion}", 
         separador,
     ]
     return "\n".join(datos)
@@ -411,7 +414,7 @@ def reporte_fechas(mi_lista):
         except ValueError:
             print("Formato incorrecto. Usa el formato DD/MM/AAAA")
 
-    contactos_filtrados = mi_lista.filtrar_por_fecha_ingreso(fecha_inicio, fecha_fin)
+    contactos_filtrados = mi_lista.filtrar_por_fecha_ingreso(fecha_inicio, fecha_fin) #posible error
 
     if not contactos_filtrados:
         print("No se encontraron contactos con fechas de ingreso dentro del rango especificado.")
@@ -436,7 +439,7 @@ def _calcular_id_matricula(matricula):
     primo = 31
     for caracter in matricula:
         valor_hash = (valor_hash * primo) + ord(caracter)
-    return str(valor_hash % 1000000).zfill(8)
+    return str(valor_hash % 100000000).zfill(8)
 
 def total_contactos(mi_lista):
     return mi_lista.tamaño()

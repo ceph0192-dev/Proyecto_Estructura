@@ -42,13 +42,14 @@ class Lista:
             return True
         return False
     
-    def eliminar(self, matricula): #Elimina un contacto de la lista por su matrícula
+    def eliminar(self, matricula, id_contacto): #Elimina un contacto de la lista por su matrícula
         if self.__head is None:
             return False
         
         if self.__head.dato.get_Matricula() == matricula: #Si el contacto a eliminar es el primero de la lista
             self.__head = self.__head.siguiente
             self.__tamaño -= 1
+            del self.__dic[id_contacto]
             return True
         
         anterior = self.__head
@@ -57,6 +58,7 @@ class Lista:
             if temp.dato.get_Matricula() == matricula:
                 anterior.siguiente = temp.siguiente
                 self.__tamaño -= 1
+                del self.__dic[id_contacto]
                 return True
             anterior = temp
             temp = temp.siguiente
@@ -75,3 +77,13 @@ class Lista:
             resultado.append(temp.dato)
             temp = temp.siguiente
         return resultado
+
+    def filtrar_por_fecha_ingreso(self, fecha_inicio, fecha_fin):
+        resultados = []
+        temp = self.__head
+        while temp is not None:
+            fecha_contacto = temp.dato.get_F_ingreso()
+            if fecha_inicio <= fecha_contacto <= fecha_fin:
+                resultados.append(temp.dato)
+            temp = temp.siguiente
+        return resultados
