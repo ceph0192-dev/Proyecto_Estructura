@@ -130,6 +130,11 @@ def nuevo_contacto(mi_lista):
     input("Presiona Enter para continuar...")
 
 def buscar_contacto(mi_lista):
+    if mi_lista.está_vacía():
+        print("La lista está vacía. Registra un contacto primero.")
+        input("Presiona Enter para continuar...")
+        return
+    
     while True:
         matricula = input("Ingrese la matrícula del contacto a buscar: ")
         if matricula != "" and matricula.isalnum():
@@ -149,6 +154,11 @@ def buscar_contacto(mi_lista):
     input("Presiona Enter para continuar...")
 
 def actualizar_contacto(mi_lista):
+    if mi_lista.está_vacía():
+        print("La lista está vacía. Registra un contacto primero.")
+        input("Presiona Enter para continuar...")
+        return
+    
     while True:
         matricula = input("Ingrese la matrícula del contacto a actualizar: ")
         if matricula != "" and matricula.isalnum():
@@ -283,6 +293,11 @@ def actualizar_contacto(mi_lista):
     input("Presiona Enter para continuar...")
 
 def eliminar_contacto(mi_lista): #Elimina un contacto de la lista por su matrícula
+    if mi_lista.está_vacía():
+        print("La lista está vacía. Registra un contacto primero.")
+        input("Presiona Enter para continuar...")
+        return
+    
     while True:
         Matricula = input("Ingrese la matrícula del contacto a eliminar: ")
         if Matricula != "" and Matricula.isalnum():
@@ -368,6 +383,11 @@ def _guardar_reporte(nombre_archivo, contenido):
     print(f"\n Reporte guardado como '{nombre_archivo}'")
 
 def reporte_matricula(mi_lista):
+    if mi_lista.está_vacía():
+        print("La lista está vacía. Registra un contacto primero.")
+        input("Presiona Enter para continuar...")
+        return
+    
     while True:
         matricula = input("Ingrese la matrícula del contacto para generar el reporte: ")
         if matricula != "" and matricula.isalnum():
@@ -395,6 +415,11 @@ def reporte_matricula(mi_lista):
     input("Presiona Enter para continuar...")
 
 def reporte_fechas(mi_lista):
+    if mi_lista.está_vacía():
+        print("La lista está vacía. Registra un contacto primero.")
+        input("Presiona Enter para continuar...")
+        return
+    
     while True:
         fecha_inicio_str = input("Ingrese la fecha de inicio (DD/MM/AAAA): ")
         try:
