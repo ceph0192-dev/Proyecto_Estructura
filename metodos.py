@@ -2,9 +2,7 @@ from lista import Lista
 from contacto import Contacto
 from datetime import datetime
 
-lista_contactos = Lista()
-
-def nuevo_contacto():
+def nuevo_contacto(mi_lista):
     while True:
         Nombres = input("Ingrese el nombre: ")
 
@@ -16,7 +14,7 @@ def nuevo_contacto():
     while True:
         Paterno = input("Ingrese el apellido paterno: ")
 
-        if Paterno != "" and Paterno.replace(" ","").isalpha():
+        if Paterno != "" and Paterno.replace(" ","").isalpha() and len(Paterno) < 80:
             break
         else:
             print("No puede estar vacío ni contener números.")
@@ -24,7 +22,7 @@ def nuevo_contacto():
     while True:
         Materno = input("Ingrese el apellido materno: ")
 
-        if Materno != "" and Materno.replace(" ","").isalpha():
+        if Materno != "" and Materno.replace(" ","").isalpha() and len(Materno) < 80:
             break
         else:
             print("No puede estar vacío ni contener números.")
@@ -32,7 +30,7 @@ def nuevo_contacto():
     while True:
         Direccion = input("Ingrese la dirección: ")
 
-        if Direccion != "":
+        if Direccion != "" and len(Direccion) < 80:
             break
         else:
             print("No puede estar vacío")
@@ -40,7 +38,7 @@ def nuevo_contacto():
     while True:
         Estado = input("Ingrese el estado: ")
 
-        if Estado != "":
+        if Estado != "" and len(Estado) < 80:
             break
         else:
             print("No puede estar vacío")
@@ -48,7 +46,7 @@ def nuevo_contacto():
     while True:
         Ciudad = input("Ingrese la ciudad: ")
 
-        if Ciudad != "":
+        if Ciudad != "" and len(Ciudad) < 80:
             break
         else:
             print("No puede estar vacío")
@@ -96,7 +94,7 @@ def nuevo_contacto():
     while True:
         Fac = input("Ingrese la facultad: ")
 
-        if Fac != "":
+        if Fac != "" and len(Fac) < 40:
             break
         else:
             print("No puede estar vacío")
@@ -104,7 +102,7 @@ def nuevo_contacto():
     while True:
         Lic = input("Ingrese la licenciatura: ")
 
-        if Lic != "":
+        if Lic != "" and len(Lic) < 80:
             break
         else:
             print("No puede estar vacío")
@@ -127,11 +125,11 @@ def nuevo_contacto():
         input("Presiona Enter para continuar...")
         return
     
-    lista_contactos.agregar(nuevo_contacto)
+    lista_contactos.insertar(nuevo_contacto)
     print("\n Contacto guardado con éxito.")
     input("Presiona Enter para continuar...")
 
-def buscar_contacto():
+def buscar_contacto(mi_lista):
     while True:
         matricula = input("Ingrese la matrícula del contacto a buscar: ")
         if matricula != "" and matricula.isalnum():
@@ -140,7 +138,7 @@ def buscar_contacto():
             print("La matrícula no puede estar vacía")
         
     id_buscar = _calcular_id_matricula(matricula)
-    nodo = lista_contactos.buscar_por_id(id_buscar)
+    nodo = mi_lista.buscar_por_id(id_buscar)
 
     if nodo is None or nodo.dato.get_Matricula() != matricula:
         print("No se encontró ningún contacto con esa matrícula.")
@@ -150,7 +148,7 @@ def buscar_contacto():
 
     input("Presiona Enter para continuar...")
 
-def actualizar_contacto():
+def actualizar_contacto(mi_lista):
     while True:
         matricula = input("Ingrese la matrícula del contacto a actualizar: ")
         if matricula != "" and matricula.isalnum():
@@ -159,7 +157,7 @@ def actualizar_contacto():
             print("La matrícula no puede estar vacía")
         
     id_buscar = _calcular_id_matricula(matricula)
-    nodo = lista_contactos.buscar_por_id(id_buscar)
+    nodo = mi_lista.buscar_por_id(id_buscar)
 
     if nodo is None or nodo.dato.get_Matricula() != matricula:
         print("No se encontró ningún contacto con esa matrícula.")
@@ -279,12 +277,12 @@ def actualizar_contacto():
     actualizar_contacto._Contacto__F_registro = temp.get_F_registro() # Mantiene la fecha de registro original
     actualizar_contacto.marcar_actualizacion() # Actualiza la fecha de última actualización
         
-    lista_contactos.actualizar(matricula, actualizar_contacto)
+    mi_lista.actualizar(matricula, actualizar_contacto)
 
     print( "\n Contacto actualizado")
     input("Presiona Enter para continuar...")
 
-def eliminar_contacto(): #Elimina un contacto de la lista por su matrícula
+def eliminar_contacto(mi_lista): #Elimina un contacto de la lista por su matrícula
     while True:
         Matricula = input("Ingrese la matrícula del contacto a eliminar: ")
         if Matricula != "" and Matricula.isalnum():
@@ -293,7 +291,7 @@ def eliminar_contacto(): #Elimina un contacto de la lista por su matrícula
             print("La matrícula no puede estar vacía")
         
     id_buscar = _calcular_id_matricula(Matricula)
-    nodo = lista_contactos.buscar_por_id(id_buscar)
+    nodo = mi_lista.buscar_por_id(id_buscar)
 
     if nodo is None or nodo.dato.get_Matricula() != Matricula:
         print("No se encontró ningún contacto con esa matrícula.")
@@ -308,7 +306,7 @@ def eliminar_contacto(): #Elimina un contacto de la lista por su matrícula
             print("Por favor ingresa 'S' para sí o 'N' para no.")
 
     if confirmar == "S":
-        lista_contactos.eliminar(Matricula, id_buscar)
+        mi_lista.eliminar(Matricula, id_buscar)
         print("Contacto eliminado.")
     else:
         print("\n Operación cancelada")
@@ -366,7 +364,7 @@ def _guardar_reporte(nombre_archivo, contenido):
         archivo.write(contenido)
     print(f"\n Reporte guardado como '{nombre_archivo}'")
 
-def reporte_matricula():
+def reporte_matricula(mi_lista):
     while True:
         matricula = input("Ingrese la matrícula del contacto para generar el reporte: ")
         if matricula != "" and matricula.isalnum():
@@ -375,7 +373,7 @@ def reporte_matricula():
             print("La matrícula no puede estar vacía")
         
     id_buscar = _calcular_id_matricula(matricula)
-    nodo = lista_contactos.buscar_por_id(id_buscar)
+    nodo = mi_lista.buscar_por_id(id_buscar)
 
     if nodo is None or nodo.dato.get_Matricula() != matricula:
         print("No se encontró ningún contacto con esa matrícula.")
@@ -393,7 +391,7 @@ def reporte_matricula():
     
     input("Presiona Enter para continuar...")
 
-def reporte_fechas():
+def reporte_fechas(mi_lista):
     while True:
         fecha_inicio_str = input("Ingrese la fecha de inicio (DD/MM/AAAA): ")
         try:
@@ -413,7 +411,7 @@ def reporte_fechas():
         except ValueError:
             print("Formato incorrecto. Usa el formato DD/MM/AAAA")
 
-    contactos_filtrados = lista_contactos.filtrar_por_fecha_ingreso(fecha_inicio, fecha_fin)
+    contactos_filtrados = mi_lista.filtrar_por_fecha_ingreso(fecha_inicio, fecha_fin)
 
     if not contactos_filtrados:
         print("No se encontraron contactos con fechas de ingreso dentro del rango especificado.")
@@ -440,5 +438,5 @@ def _calcular_id_matricula(matricula):
         valor_hash = (valor_hash * primo) + ord(caracter)
     return str(valor_hash % 1000000).zfill(8)
 
-def total_contactos():
-    return lista_contactos.tamaño()
+def total_contactos(mi_lista):
+    return mi_lista.tamaño()
