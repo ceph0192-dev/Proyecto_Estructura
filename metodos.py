@@ -466,5 +466,6 @@ def _calcular_id_matricula(matricula):
         valor_hash = (valor_hash * primo) + ord(caracter)
     return str(valor_hash % 100000000).zfill(8)
 
-def total_contactos(mi_lista):
-    return mi_lista.tamaño()
+def total_contactos():
+    return lista_contactos.tamaño()
+    
