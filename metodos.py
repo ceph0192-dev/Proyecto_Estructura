@@ -127,7 +127,7 @@ def nuevo_contacto(mi_lista):
         input("Presiona Enter para continuar...")
         return
     
-    mi_lista.agregar(nuevo_contacto)
+    mi_lista.insertar(nuevo_contacto)
     print("\n Contacto guardado con éxito.")
     input("Presiona Enter para continuar...")
 
