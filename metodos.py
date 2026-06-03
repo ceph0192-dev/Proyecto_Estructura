@@ -122,16 +122,16 @@ def nuevo_contacto(mi_lista):
                     Nacimiento=Nacimiento, Tel=Tel, C_personal=C_personal, Matricula=Matricula,
                     C_institucional=C_institucional, Fac=Fac, Lic=Lic, F_ingreso=F_ingreso)
 
-    if lista_contactos.existe_id(nuevo_contacto.get_id()): #verifica si ya existe un contacto con la misma matrícula antes de agregarlo
+    if mi_lista.buscar_por_id(nuevo_contacto.get_id()): #verifica si ya existe un contacto con la misma matrícula antes de agregarlo
         print("Ya existe un contacto con esta matrícula. No se puede agregar.")
         input("Presiona Enter para continuar...")
         return
     
-    lista_contactos.agregar(nuevo_contacto)
+    mi_lista.agregar(nuevo_contacto)
     print("\n Contacto guardado con éxito.")
     input("Presiona Enter para continuar...")
 
-def buscar_contacto():
+def buscar_contacto(mi_lista):
     while True:
         matricula = input("Ingrese la matrícula del contacto a buscar: ")
         if matricula != "" and matricula.isalnum():
@@ -140,7 +140,7 @@ def buscar_contacto():
             print("La matrícula no puede estar vacía")
         
     id_buscar = _calcular_id_matricula(matricula)
-    nodo = lista_contactos.buscar_por_id(id_buscar)
+    nodo = mi_lista.buscar_por_id(id_buscar)
 
     if nodo is None or nodo.dato.get_Matricula() != matricula:
         print("No se encontró ningún contacto con esa matrícula.")
@@ -150,7 +150,7 @@ def buscar_contacto():
 
     input("Presiona Enter para continuar...")
 
-def actualizar_contacto():
+def actualizar_contacto(mi_lista):
     while True:
         matricula = input("Ingrese la matrícula del contacto a actualizar: ")
         if matricula != "" and matricula.isalnum():
@@ -159,7 +159,7 @@ def actualizar_contacto():
             print("La matrícula no puede estar vacía")
         
     id_buscar = _calcular_id_matricula(matricula)
-    nodo = lista_contactos.buscar_por_id(id_buscar)
+    nodo = mi_lista.buscar_por_id(id_buscar)
 
     if nodo is None or nodo.dato.get_Matricula() != matricula:
         print("No se encontró ningún contacto con esa matrícula.")
