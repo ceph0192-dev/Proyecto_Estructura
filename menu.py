@@ -4,6 +4,8 @@ import os
 #Modulos propios del proyecto
 import metodos
 from lista import Lista
+#Holaaaaaaaaaaaaaa mundo git 
+import contacto
 
 def menu():
     print("\n" + "="*20)
@@ -60,7 +62,7 @@ def mostrar_menu():
         
         elif opcion == "4":
             os.system('clear' if os.name == 'posix' else 'cls')
-            metodos.mostrar_contactos(mi_lista)
+            contacto.mostrar_info(mi_lista)
 
         elif opcion== "5":
             os.system('clear' if os.name == 'posix' else 'cls')
