@@ -5,8 +5,6 @@ import os
 import metodos
 from lista import Lista
 
-from contacto import mostrar_info
-
 def menu():
     print("\n" + "="*20)
     print("   MENÚ PRINCIPAL   ")
