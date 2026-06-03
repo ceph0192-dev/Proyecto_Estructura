@@ -4,7 +4,7 @@ from datetime import datetime
 
 lista_contactos = Lista()
 
-def nuevo_contacto():
+def nuevo_contacto(mi_lista):
     while True:
         Nombres = input("Ingrese el nombre: ")
 
