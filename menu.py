@@ -5,6 +5,8 @@ import os
 import metodos
 from lista import Lista
 
+from contacto import mostrar_info
+
 def menu():
     print("\n" + "="*20)
     print("   MENÚ PRINCIPAL   ")
@@ -12,9 +14,10 @@ def menu():
     print("1. Registrar contacto")
     print("2. Buscar contacto")
     print("3. Actualizar contacto")
-    print("4. Eliminar contacto")
-    print("5. Generar reporte")
-    print("6. Salir del programa")
+    print("4. Mostrar contactos")
+    print("5. Eliminar contacto")
+    print("6. Generar reporte")
+    print("7. Salir del programa")
     print("="*20)
 
 def menu_reportes():
@@ -40,7 +43,7 @@ def mostrar_menu():
             print(error)
             error = ""
 
-        opcion = input("Elige una opción (1-6): ")
+        opcion = input("Elige una opción (1-7): ")
 
         if opcion == "1":
             os.system('clear' if os.name == 'posix' else 'cls')
@@ -56,12 +59,16 @@ def mostrar_menu():
         elif opcion == "3":
             os.system('clear' if os.name == 'posix' else 'cls')
             metodos.actualizar_contacto(mi_lista)
+        
+        elif opcion == "4":
+            os.system('clear' if os.name == 'posix' else 'cls')
+            metodos.mostrar_contactos(mi_lista)
 
-        elif opcion== "4":
+        elif opcion== "5":
             os.system('clear' if os.name == 'posix' else 'cls')
             metodos.eliminar_contacto(mi_lista)
 
-        elif opcion == "5":
+        elif opcion == "6":
             while True:
                 os.system('clear' if os.name == 'posix' else 'cls')
 
@@ -95,7 +102,7 @@ def mostrar_menu():
 
 
 
-        elif opcion == "6":
+        elif opcion == "7":
             os.system('clear' if os.name == 'posix' else 'cls')
             print("Finalización del programa. Adioooooooooooooooooooooos..........")
             break
