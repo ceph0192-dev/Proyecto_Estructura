@@ -62,7 +62,7 @@ def mostrar_menu():
         
         elif opcion == "4":
             os.system('clear' if os.name == 'posix' else 'cls')
-            contacto.mostrar_info(mi_lista)
+            metodos.mostrar_contactos(mi_lista)
 
         elif opcion== "5":
             os.system('clear' if os.name == 'posix' else 'cls')
@@ -104,7 +104,7 @@ def mostrar_menu():
 
         elif opcion == "7":
             os.system('clear' if os.name == 'posix' else 'cls')
-            print("Finalización del programa. Adioooooooooooooooooooooos..........")
+            print("Fin del programa, saliendo...........")
             break
 
         else:

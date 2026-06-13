@@ -1,3 +1,7 @@
+import os
+import platform
+import subprocess
+
 from lista import Lista
 from contacto import Contacto
 from datetime import datetime
@@ -40,18 +44,18 @@ def nuevo_contacto(mi_lista):
     while True:
         Estado = input("Ingrese el estado: ")
 
-        if Estado != "":
+        if Estado != "" and Estado.replace(" ","").isalpha():
             break
         else:
-            print("No puede estar vacío")
+            print("No puede estar vacío ni contener números.")
 
     while True:
         Ciudad = input("Ingrese la ciudad: ")
 
-        if Ciudad != "":
+        if Ciudad != "" and Ciudad.replace(" ","").isalpha():
             break
         else:
-            print("No puede estar vacío")
+            print("No puede estar vacío ni contener números.")
 
     while True:
         Nac_str = input("Ingrese la fecha de nacimiento (DD/MM/AAAA): ")
@@ -63,19 +67,19 @@ def nuevo_contacto(mi_lista):
             print("Formato incorrecto. Usa el formato DD/MM/AAAA")
 
     while True:
-        Tel = input("Ingrese el numero de telefono: ")
+        Tel = input("Ingrese el numero de telefono (10 dígitos): ")
         
         if Tel.isdigit() and len(Tel) == 10:
             break
         else:
-            print("El teléfono debe contener exactamente 10 números.")
+            print("El teléfono debe contener exactamente 10 dígitos.")
 
     while True:
         C_personal = input("Ingrese el correo personal: ")
         if C_personal != "" and "@" in C_personal and "." in C_personal:
             break
         else:
-            print("No puede estar vacío")
+            print("El correo personal debe llevar un formato de correo válido")
 
     while True:
         Matricula = input("Ingrese la matricula: ")
@@ -91,23 +95,23 @@ def nuevo_contacto(mi_lista):
         if C_institucional != "" and "@" in C_institucional and "." in C_institucional:
             break
         else:
-            print("No puede estar vacío")
+            print("El correo institucional debe llevar un formato de correo válido")
 
     while True:
         Fac = input("Ingrese la facultad: ")
 
-        if Fac != "":
+        if Fac != "" and Fac.replace(" ","").isalpha():
             break
         else:
-            print("No puede estar vacío")
+            print("No puede estar vacío ni contener números.")
 
     while True:
         Lic = input("Ingrese la licenciatura: ")
 
-        if Lic != "":
+        if Lic != "" and Lic.replace(" ","").isalpha():
             break
         else:
-            print("No puede estar vacío")
+            print("No puede estar vacío ni contener números.")
 
     while True:
         F_ingreso_str = input("Ingrese la fecha de ingreso (DD/MM/AAAA): ")
@@ -167,7 +171,7 @@ def actualizar_contacto(mi_lista):
         return
     
     temp = nodo.dato
-    print("\n Contacto encontrado: {temp.get_nombre_completo()})")
+    print(f"\n Contacto encontrado: {temp.get_nombre_completo()}")
     print("Ingrese la nueva información (deja en blanco para mantener el valor actual):")
 
     while True: #Nombres
@@ -204,13 +208,25 @@ def actualizar_contacto(mi_lista):
     if nueva_direccion == "":
         nueva_direccion = temp.get_Direccion()
 
-    nuevo_estado = input(f"Estado ({temp.get_Estado()}): ") #Estado
-    if nuevo_estado == "":
-        nuevo_estado = temp.get_Estado()
+    while True: #Estado
+        nuevo_estado = input(f"Estado ({temp.get_Estado()}): ")
+        if nuevo_estado == "":
+            nuevo_estado = temp.get_Estado()
+            break
+        elif nuevo_estado.replace(" ","").isalpha():
+            break
+        else:
+            print("No puede contener números.")
 
-    nueva_ciudad = input(f"Ciudad ({temp.get_Ciudad()}): ") #Ciudad
-    if nueva_ciudad == "":
-        nueva_ciudad = temp.get_Ciudad()
+    while True: #Ciudad
+        nueva_ciudad = input(f"Ciudad ({temp.get_Ciudad()}): ")
+        if nueva_ciudad == "":
+            nueva_ciudad = temp.get_Ciudad()
+            break
+        elif nueva_ciudad.replace(" ","").isalpha():
+            break
+        else:
+            print("No puede contener números.")
 
     while True: #Nacimiento
         nuevo_nac_str = input(f"Fecha de Nacimiento ({temp.get_Nacimiento().strftime('%d/%m/%Y')}) (DD/MM/AAAA): ")
@@ -253,13 +269,25 @@ def actualizar_contacto(mi_lista):
         else:
             print("Ingresa un correo válido")
 
-    nueva_fac = input(f"Facultad ({temp.get_Fac()}): ") #Facultad
-    if nueva_fac == "":
-        nueva_fac = temp.get_Fac()
+    while True: #Facultad
+        nueva_fac = input(f"Facultad ({temp.get_Fac()}): ")
+        if nueva_fac == "":
+            nueva_fac = temp.get_Fac()
+            break
+        elif nueva_fac.replace(" ","").isalpha():
+            break
+        else:
+            print("No puede contener números.")
 
-    nueva_lic = input(f"Licenciatura ({temp.get_Lic()}): ") #Licenciatura
-    if nueva_lic == "":
-        nueva_lic = temp.get_Lic()
+    while True: #Licenciatura
+        nueva_lic = input(f"Licenciatura ({temp.get_Lic()}): ")
+        if nueva_lic == "":
+            nueva_lic = temp.get_Lic()
+            break
+        elif nueva_lic.replace(" ","").isalpha():
+            break
+        else:
+            print("No puede contener números.")
         
     while True: #Fecha de Ingreso
         nuevo_f_ingreso_str = input(f"Fecha de Ingreso ({temp.get_F_ingreso().strftime('%d/%m/%Y')}) (DD/MM/AAAA): ")
@@ -279,12 +307,12 @@ def actualizar_contacto(mi_lista):
     actualizar_contacto._Contacto__F_registro = temp.get_F_registro() # Mantiene la fecha de registro original
     actualizar_contacto.marcar_actualizacion() # Actualiza la fecha de última actualización
         
-    lista_contactos.actualizar(matricula, actualizar_contacto)
+    mi_lista.actualizar(matricula, actualizar_contacto)
 
     print( "\n Contacto actualizado")
     input("Presiona Enter para continuar...")
 
-def eliminar_contacto(): #Elimina un contacto de la lista por su matrícula
+def eliminar_contacto(mi_lista): #Elimina un contacto de la lista por su matrícula
     while True:
         Matricula = input("Ingrese la matrícula del contacto a eliminar: ")
         if Matricula != "" and Matricula.isalnum():
@@ -293,7 +321,7 @@ def eliminar_contacto(): #Elimina un contacto de la lista por su matrícula
             print("La matrícula no puede estar vacía")
         
     id_buscar = _calcular_id_matricula(Matricula)
-    nodo = lista_contactos.buscar_por_id(id_buscar)
+    nodo = mi_lista.buscar_por_id(id_buscar)
 
     if nodo is None or nodo.dato.get_Matricula() != Matricula:
         print("No se encontró ningún contacto con esa matrícula.")
@@ -308,10 +336,22 @@ def eliminar_contacto(): #Elimina un contacto de la lista por su matrícula
             print("Por favor ingresa 'S' para sí o 'N' para no.")
 
     if confirmar == "S":
-        lista_contactos.eliminar(Matricula, id_buscar)
+        mi_lista.eliminar(Matricula, id_buscar)
         print("Contacto eliminado.")
     else:
         print("\n Operación cancelada")
+    input("Presiona Enter para continuar...")
+
+def mostrar_contactos(mi_lista):
+    contactos = mi_lista.mostrar_todos()
+    if len(contactos) == 0:
+        print("No hay contactos registrados.")
+        input("Presiona Enter para continuar...")
+        return
+    print("\n Contactos registrados:")
+    for c in contactos:
+        c.mostrar_info()
+        print("-" * 40)
     input("Presiona Enter para continuar...")
 
 # ----------------------------------
@@ -322,9 +362,9 @@ def _contacto_txt(contacto):
     separador = "-" * 40
 
     if contacto.get_T_actualizacion():
-        actualizacion = contacto.get_F_actualizacion().strftime('%d/%m/%Y %H:%M:%S')
+        actualizacion = contacto.get_T_actualizacion().strftime('%d/%m/%Y %H:%M:%S')
     else:
-        actualizacion = "No se ha actualizado" \
+        actualizacion = "No se ha actualizado" 
     
     datos = [
         separador,
@@ -341,8 +381,8 @@ def _contacto_txt(contacto):
         f"Facultad: {contacto.get_Fac()}\n"
         f"Licenciatura: {contacto.get_Lic()}\n"
         f"Fecha de Ingreso: {contacto.get_F_ingreso().strftime('%d/%m/%Y')}\n"
-        f"Fecha de Registro: {contacto.get_F_registro().strftime('%d/%m/%Y %H:%M:%S')}\n"
-        f"Fecha de Última Actualización: {contacto.get_F_actualizacion().strftime('%d/%m/%Y %H:%M:%S')}\n",
+        f"Fecha de Registro: {contacto.get_F_registro().strftime('%d/%m/%Y')}\n"
+        f"Fecha de Última Actualización: {actualizacion} \n",
         separador,
     ]
     return "\n".join(datos)
@@ -365,8 +405,18 @@ def _guardar_reporte(nombre_archivo, contenido):
     with open(nombre_archivo, "w", encoding="utf-8") as archivo:
         archivo.write(contenido)
     print(f"\n Reporte guardado como '{nombre_archivo}'")
+    try:
+        sistema = platform.system()
+        if sistema == "Windows":
+            os.startfile(nombre_archivo)
+        elif sistema == "Darwin":  # macOS
+            subprocess.run(["open", nombre_archivo])
+        else:  # Linux y otros
+            subprocess.run(["xdg-open", nombre_archivo])
+    except Exception as e:
+        print(f"No se pudo abrir el archivo automáticamente: {e}")
 
-def reporte_matricula():
+def reporte_matricula(mi_lista):
     while True:
         matricula = input("Ingrese la matrícula del contacto para generar el reporte: ")
         if matricula != "" and matricula.isalnum():
@@ -375,7 +425,7 @@ def reporte_matricula():
             print("La matrícula no puede estar vacía")
         
     id_buscar = _calcular_id_matricula(matricula)
-    nodo = lista_contactos.buscar_por_id(id_buscar)
+    nodo = mi_lista.buscar_por_id(id_buscar)
 
     if nodo is None or nodo.dato.get_Matricula() != matricula:
         print("No se encontró ningún contacto con esa matrícula.")
@@ -393,7 +443,7 @@ def reporte_matricula():
     
     input("Presiona Enter para continuar...")
 
-def reporte_fechas():
+def reporte_fechas(mi_lista):
     while True:
         fecha_inicio_str = input("Ingrese la fecha de inicio (DD/MM/AAAA): ")
         try:
@@ -413,7 +463,7 @@ def reporte_fechas():
         except ValueError:
             print("Formato incorrecto. Usa el formato DD/MM/AAAA")
 
-    contactos_filtrados = lista_contactos.filtrar_por_fecha_ingreso(fecha_inicio, fecha_fin)
+    contactos_filtrados = mi_lista.filtrar_por_fecha_ingreso(fecha_inicio, fecha_fin)
 
     if not contactos_filtrados:
         print("No se encontraron contactos con fechas de ingreso dentro del rango especificado.")
@@ -438,7 +488,7 @@ def _calcular_id_matricula(matricula):
     primo = 31
     for caracter in matricula:
         valor_hash = (valor_hash * primo) + ord(caracter)
-    return str(valor_hash % 1000000).zfill(8)
+    return str(valor_hash % 100000000).zfill(8)
 
 def total_contactos():
     return lista_contactos.tamaño()
